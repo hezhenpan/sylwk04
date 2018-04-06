@@ -13,6 +13,11 @@ class ShiyanlouPipeline(object):
     def process_item(self, item, spider):
         item['update_time'] = datetime.strptime(
                 item['update_time'], '%Y-%m-%dT%H:%M:%SZ')
+
+        item['commits'] = int(item['commits'].strip().replace(',',''))
+        item['branches'] = int(item['branches'].strip().replace(',',''))
+        item['releases'] = int(item['releases'].strip().replace(',',''))
+
         self.session.add(Repository(**item))
         return item
 
